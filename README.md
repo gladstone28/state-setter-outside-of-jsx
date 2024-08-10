@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+The State Hook
+Use State Setter Outside of JSX
+18 min
+Let’s see an example of managing the changing value of a string as a user types into a text input field:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+import React, { useState } from 'react';
 
-## Available Scripts
+export default function EmailTextInput() {
+  const [email, setEmail] = useState('');
+  const handleChange = (event) => {
+    const updatedEmail = event.target.value;
+    setEmail(updatedEmail);
+  }
 
-In the project directory, you can run:
+  return (
+    <input value={email} onChange={handleChange} />
+  );
+}
 
-### `npm start`
+Here’s a breakdown of how the above code works:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+We use array destructuring to create our local state variable email and our local setter function setEmail().
+The local variable email is assigned the current state value at index 0 from the array returned by useState().
+The local variable setEmail() is assigned a reference to the state setter function at index 1 from the array returned by useState().
+It’s a convention to name the setter variable using the current state variable (in this example, email) with “set” prepended.
+The JSX input tag has an event listener called onChange. This event listener calls an event handler each time the user types something in this element. In the example above, our event handler is defined inside of the definition for our function component, but outside of our JSX. Earlier in this lesson, we wrote our event handlers right in our JSX. Those inline event handlers work perfectly fine, but when we want to do something more interesting than just calling the state setter with a static value, it’s a good practice to separate that logic from our JSX. This separation of concerns makes our code easier to read, test, and modify.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+It’s common in React code to simplify this:
 
-### `npm test`
+const handleChange = (event) => {
+  const newEmail = event.target.value;
+  setEmail(newEmail);
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+to this:
 
-### `npm run build`
+const handleChange = (event) => setEmail(event.target.value);
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+or, using object destructuring, this:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+const handleChange = ({target}) => setEmail(target.value);
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+All three code snippets above behave the same way, so there really isn’t a right and wrong between these different code snippets. We’ll use the last, most concise version moving forward.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
