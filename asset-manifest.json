@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/state-setter-outside-of-jsx/static/js/main.c9a6eec6.js",
+    "index.html": "/state-setter-outside-of-jsx/index.html",
+    "main.c9a6eec6.js.map": "/state-setter-outside-of-jsx/static/js/main.c9a6eec6.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.c9a6eec6.js"
+  ]
+}
